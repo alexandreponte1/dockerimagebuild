@@ -5,14 +5,16 @@ on:
     branches:
       - 'main'
 
-env:
-  DAY_OF_WEEK: "echo $(date +%F-%H-%M))"
 
 jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    
+    
+    - name: set env
+      run: echo "::set-env name=NOW::$(date +'%Y-%m-%dT%H:%M')"
 
     - name: Docker Login
       id: docker
@@ -25,4 +27,4 @@ jobs:
       uses: docker/build-push-action@v3.2.0
       with:
         push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/fringe:${{ env.DAY_OF_WEEK }}
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/fringe:${{ env.NOW }}
