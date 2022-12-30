@@ -21,4 +21,4 @@ jobs:
       uses: docker/build-push-action@v3.2.0
       with:
         push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/fringe:latest
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/fringe:${{ github.event.head_commit.message }}
