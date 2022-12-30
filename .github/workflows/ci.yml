@@ -5,16 +5,22 @@ on:
     branches:
       - 'main'
 
-
 jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    
-    
-    - name: set env
-      run: echo "::set-env name=NOW::$(date +'%Y-%m-%dT%H:%M')"
+
+
+    - name: Get current date
+      id: date
+      run: |
+        echo "{date}={$(date +'%Y-%m-%dT%H:%M')}" >> $GITHUB_STATE
+    - name: Test with environment variables
+      run: echo $TAG_NAME - $RELEASE_NAME
+      env:
+        TAG_NAME: nightly-tag-${{ env.date }}
+        RELEASE_NAME: nightly-release-${{ env.date }}
 
     - name: Docker Login
       id: docker
@@ -27,4 +33,8 @@ jobs:
       uses: docker/build-push-action@v3.2.0
       with:
         push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/fringe:${{ env.NOW }}
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/fringe:${{ env.TAG_NAME }}
+
+
+
+
