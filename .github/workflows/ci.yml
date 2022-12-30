@@ -5,6 +5,9 @@ on:
     branches:
       - 'main'
 
+env:
+  DAY_OF_WEEK: $(date +%F-%H-%M)
+
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -22,4 +25,4 @@ jobs:
       uses: docker/build-push-action@v3.2.0
       with:
         push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/fringe:${{ steps.docker.outputs.docker }}
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/fringe:${{ env.DAY_OF_WEEK }}
