@@ -6,7 +6,7 @@ on:
       - 'main'
 
 env:
-  DAY_OF_WEEK: $(date +%F-%H-%M)
+  DAY_OF_WEEK: "echo $(date +%F-%H-%M))"
 
 jobs:
   docker:
