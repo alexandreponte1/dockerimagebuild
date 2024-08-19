@@ -30,10 +30,8 @@ jobs:
 
   scan:
     name: Scan Docker Image
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Run Image Scan
-        uses: alexandreponte1/dockerimagebuild/.github/workflows/scan.yml@main
-        with:
-          docker_image: ${{ secrets.DOCKERHUB_USERNAME }}/fringe:${{ github.run_number }}
+    needs: [build]
+    uses: alexandreponte1/dockerimagebuild/.github/workflows/scan.yml@main
+    with:
+        docker_image: ${{ secrets.DOCKERHUB_USERNAME }}/fringe:${{ github.run_number }}
+
