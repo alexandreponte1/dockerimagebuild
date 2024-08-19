@@ -12,6 +12,12 @@ jobs:
   scan:
     runs-on: ubuntu-latest
     steps:
+      - name: Docker Login
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
       - name: Executar o scan de vulnerabilidade
         uses: aquasecurity/trivy-action@0.20.0
         with:
@@ -39,30 +45,73 @@ jobs:
 
 
 
-# name: Trivi Scan
+
+
+# name: Trivy Scan
+
 # on:
-#     workflow_call: 
-#         inputs:
-#             docker_image:
-#                 required: true
-#                 type: string
-#                 description: "Tag da imagem que deve ser escaneada"
+#   workflow_call: 
+#     inputs:
+#       docker_image:
+#         required: true
+#         type: string
+#         description: "Tag da imagem que deve ser escaneada"
+
 # jobs:
-#     scan:
-#         runs-on: ubuntu-latest
-#         steps:
-#           - name: Executar o scan de vulnerabilidade
-#             uses: aquasecurity/trivy-action@0.20.0
-#             with:
-#               image-ref: ${{ inputs.docker_image }}
-#               scan-type: image
-#               format: 'json'
-#               exit-code: 0
-#               output: 'resultado-trivy.json'
-#               severity: UNKNOWN,CRITICAL,HIGH,MEDIUM,LOW
+#   scan:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Executar o scan de vulnerabilidade
+#         uses: aquasecurity/trivy-action@0.20.0
+#         with:
+#           image-ref: ${{ inputs.docker_image }}
+#           scan-type: image
+#           format: 'json'
+#           exit-code: 0
+#           output: 'resultado-trivy.json'
+#           severity: UNKNOWN,CRITICAL,HIGH,MEDIUM,LOW
+      
+#       # - name: Upload do arquivo de resultado do trivy
+#       #   uses: actions/upload-artifact@v4
+#       #   with:
+#       #     name: trivy
+#       #     path: resultado-trivy.json
+
+
+
+
+
+
+
+
+
+
+
+
+# # name: Trivi Scan
+# # on:
+# #     workflow_call: 
+# #         inputs:
+# #             docker_image:
+# #                 required: true
+# #                 type: string
+# #                 description: "Tag da imagem que deve ser escaneada"
+# # jobs:
+# #     scan:
+# #         runs-on: ubuntu-latest
+# #         steps:
+# #           - name: Executar o scan de vulnerabilidade
+# #             uses: aquasecurity/trivy-action@0.20.0
+# #             with:
+# #               image-ref: ${{ inputs.docker_image }}
+# #               scan-type: image
+# #               format: 'json'
+# #               exit-code: 0
+# #               output: 'resultado-trivy.json'
+# #               severity: UNKNOWN,CRITICAL,HIGH,MEDIUM,LOW
           
-#           # - name: Upload do arquivo de resultado do trivy
-#           #   uses: actions/upload-artifact@v4
-#           #   with:
-#           #     name: trivy
-#           #     path: resultado-trivy.json
+# #           # - name: Upload do arquivo de resultado do trivy
+# #           #   uses: actions/upload-artifact@v4
+# #           #   with:
+# #           #     name: trivy
+# #           #     path: resultado-trivy.json
