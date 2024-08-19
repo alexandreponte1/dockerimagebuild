@@ -1,9 +1,9 @@
-name: ci
-
+name: CI
 on:
-  push:
-    branches:
-      - 'main'
+  push: 
+  workflow_dispatch: 
+jobs:
+    build:
 
 jobs:
   docker:
@@ -27,7 +27,15 @@ jobs:
       with:
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/fringe:${{github.run_number}}
+        
 
+
+  scan:
+    name: Scan da Imagem
+    needs: [build]
+    uses: falexandreponte1/dockerimagebuild/.github/workflows/scan.yml
+    with:
+      docker_image: ${{ secrets.DOCKERHUB_USERNAME }}/fringe:${{github.run_number}}
 
 
 
