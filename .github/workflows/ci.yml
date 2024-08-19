@@ -34,6 +34,6 @@ jobs:
     needs: build
     steps:
       - name: Run Image Scan
-        uses: alexandreponte2/dockerimagebuild/.github/workflows/scan.yml
+        uses: alexandreponte1/dockerimagebuild/.github/workflows/scan.yml@main
         with:
           docker_image: ${{ secrets.DOCKERHUB_USERNAME }}/fringe:${{ github.run_number }}
