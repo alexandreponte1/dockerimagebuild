@@ -28,12 +28,37 @@ jobs:
       with:
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/fringe:${{github.run_number}}
-  scan:
-    name: Scan Docker Image
-    needs: [docker]
-    uses: alexandreponte1/dockerimagebuild/.github/workflows/scan.yml@main
-    with:
-        docker_image: alexandreponte1/fringe:${{ github.run_number }}
+
+    - name: Executar o scan de vulnerabilidade
+      uses: aquasecurity/trivy-action@0.20.0
+      with:
+        image-ref: alexandreponte/fringe:${{github.run_number}}
+        scan-type: image
+        format: 'json'
+        exit-code: 1
+        output: 'resultado-trivy.json'
+        severity: CRITICAL,HIGH,MEDIUM,LOW
+
+    - name: Upload Trivy Scan Report
+      uses: actions/upload-artifact@v4
+      with:
+        name: trivy-scan-report
+        path: resultado-trivy.json
+
+
+
+
+
+
+
+
+
+
+    # name: Scan Docker Image
+    # needs: [docker]
+    # uses: alexandreponte1/dockerimagebuild/.github/workflows/scan.yml@main
+    # with:
+    #     docker_image: alexandreponte1/fringe:${{ github.run_number }}
 
 
 
