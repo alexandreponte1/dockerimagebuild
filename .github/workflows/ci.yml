@@ -28,18 +28,30 @@ jobs:
       with:
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/fringe:${{github.run_number}}
+        tags: | 
+            ${{ secrets.DOCKERHUB_USERNAME }}/fringe:${{github.run_number}}
+            ${{ secrets.DOCKERHUB_USERNAME }}/fringe:latest
 
 
 
-    - name: Executar o scan de vulnerabilidade
-      uses: aquasecurity/trivy-action@0.20.0
+    scan:
+      name: Scan da Imagem
+      needs: [build]
+      uses: alexandreponte1/testebuilddocker/.github/workflows/scan.yml@main
       with:
-        image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/fringe:${{github.run_number}}       # Nome e tag da imagem Docker a ser escaneada
-        # image-ref: alexandreponte/fringe:25        # Nome e tag da imagem Docker a ser escaneada
-        scan-type: image
-        format: 'table'                            # Formato para exibir na tela
-        # severity: CRITICAL,HIGH                    # Escaneia apenas CRITICAL e HIGH
-        severity: LOW                    # Escaneia apenas CRITICAL e HIGH
+        docker_image: alexandreponte/fringe:${{ github.run_number }}
+
+
+
+    # - name: Executar o scan de vulnerabilidade
+    #   uses: aquasecurity/trivy-action@0.20.0
+    #   with:
+    #     image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/fringe:${{github.run_number}}       # Nome e tag da imagem Docker a ser escaneada
+    #     # image-ref: alexandreponte/fringe:25        # Nome e tag da imagem Docker a ser escaneada
+    #     scan-type: image
+    #     format: 'table'                            # Formato para exibir na tela
+    #     # severity: CRITICAL,HIGH                    # Escaneia apenas CRITICAL e HIGH
+    #     severity: LOW                    # Escaneia apenas CRITICAL e HIGH
         exit-code: 1    
 
 
