@@ -32,7 +32,7 @@ jobs:
     - name: Executar o scan de vulnerabilidade
       uses: aquasecurity/trivy-action@0.20.0
       with:
-        image-ref: alexandreponte/fringe:${{github.run_number}}
+        image-ref: alexandreponte/fringe:25
         scan-type: image
         format: 'json'
         exit-code: 1
