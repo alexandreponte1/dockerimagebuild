@@ -7,7 +7,7 @@ on:
     #   - 'main'
 
 jobs:
-  docker:
+  build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -34,12 +34,12 @@ jobs:
 
 
 
-    scan:
-      name: Scan da Imagem
-      needs: [build]
-      uses: alexandreponte1/testebuilddocker/.github/workflows/scan.yml@main
-      with:
-        docker_image: alexandreponte/fringe:${{ github.run_number }}
+  scan:
+    name: Scan da Imagem
+    needs: [build]
+    uses: alexandreponte1/testebuilddocker/.github/workflows/scan.yml@main
+    with:
+      docker_image: alexandreponte/fringe:${{ github.run_number }}
 
 
 
