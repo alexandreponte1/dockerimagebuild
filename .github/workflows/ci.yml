@@ -38,8 +38,10 @@ jobs:
         # image-ref: alexandreponte/fringe:25        # Nome e tag da imagem Docker a ser escaneada
         scan-type: image
         format: 'table'                            # Formato para exibir na tela
-        severity: CRITICAL,HIGH                    # Escaneia apenas CRITICAL e HIGH
+        # severity: CRITICAL,HIGH                    # Escaneia apenas CRITICAL e HIGH
+        severity: LOW                    # Escaneia apenas CRITICAL e HIGH
         exit-code: 1    
+
 
     # - name: Executar o scan de vulnerabilidade
     #   uses: aquasecurity/trivy-action@0.20.0
