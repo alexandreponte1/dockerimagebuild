@@ -39,11 +39,11 @@ jobs:
         output: 'resultado-trivy.json'
         severity: CRITICAL,HIGH,MEDIUM,LOW
 
-    - name: Upload Trivy Scan Report
-      uses: actions/upload-artifact@v4
-      with:
-        name: trivy-scan-report
-        path: resultado-trivy.json
+    # - name: Upload Trivy Scan Report
+    #   uses: actions/upload-artifact@v4
+    #   with:
+    #     name: trivy-scan-report
+    #     path: resultado-trivy.json
 
 
 
